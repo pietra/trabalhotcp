@@ -9,12 +9,13 @@ public class Transfer extends Transaction {
 	private CurrentAccount destinationAccount;
 
 	// Valor do imposto na transação
-	private double imposto;
+	private double tax;
 	
 	public Transfer(OperationLocation location, CurrentAccount account,
 			CurrentAccount destinationAccount, double amount) {
 		super(location, account, amount);
 		this.destinationAccount = destinationAccount;
+		tax = amount * TAX;
 	}
 
 	/**
@@ -24,8 +25,8 @@ public class Transfer extends Transaction {
 		return destinationAccount;
 	}
 	
-	public double getImposto() {
-		return imposto;
+	public double getTax() {
+		return tax;
 	}
 
 }

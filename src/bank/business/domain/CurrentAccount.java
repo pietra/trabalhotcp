@@ -50,7 +50,7 @@ public class CurrentAccount implements Credentials {
 		}
 		
 		// Não adiciona o imposto na conta
-		this.balance += amount * (1 - Transaction.IMPOSTO);
+		this.balance += amount * (1 - Transaction.TAX);
 	}
 
 	/**
