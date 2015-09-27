@@ -48,8 +48,9 @@ public class CurrentAccount implements Credentials {
 		if (!isValidAmount(amount)) {
 			throw new BusinessException("exception.invalid.amount");
 		}
-
-		this.balance += amount;
+		
+		// Não adiciona o imposto na conta
+		this.balance += amount * (1 - Transaction.IMPOSTO);
 	}
 
 	/**

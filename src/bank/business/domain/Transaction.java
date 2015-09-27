@@ -8,6 +8,9 @@ import java.util.Date;
  */
 public abstract class Transaction {
 
+	// Imposto sobre transação
+	public static final double IMPOSTO = 0.002;
+	
 	private CurrentAccount account;
 	private double amount;
 	private Date date;
