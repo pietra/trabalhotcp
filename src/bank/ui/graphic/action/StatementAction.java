@@ -88,7 +88,7 @@ public class StatementAction extends AccountAbstractAction {
 
 		@Override
 		public int getColumnCount() {
-			return 5;
+			return 6;
 		}
 
 		@Override
@@ -109,6 +109,9 @@ public class StatementAction extends AccountAbstractAction {
 				break;
 			case 4:
 				key = "amount";
+				break;
+			case 5:
+				key = "tax";
 				break;
 			default:
 				assert false;
@@ -171,7 +174,16 @@ public class StatementAction extends AccountAbstractAction {
 					assert false;
 				}
 				break;
-
+			case 5:
+				if (t instanceof Deposit) {
+					val = ((Deposit) t).getTax();
+				} else if (t instanceof Transfer) {
+					val = ((Transfer) t).getTax();
+				} else {
+					assert false;
+				}
+				break;
+				
 			default:
 				assert false;
 				break;
