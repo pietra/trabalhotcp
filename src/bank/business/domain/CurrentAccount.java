@@ -34,11 +34,20 @@ public class CurrentAccount implements Credentials {
 		this.balance = initialBalance;
 	}
 
-	public Deposit deposit(OperationLocation location, long envelope,
+	public EnvelopeDeposit depositEnvelope(OperationLocation location, long envelope,
 			double amount) throws BusinessException {
 		depositAmount(amount);
 
-		Deposit deposit = new Deposit(location, this, envelope, amount);
+		EnvelopeDeposit deposit = new EnvelopeDeposit(location, this, envelope, amount);
+		this.deposits.add(deposit);
+
+		return deposit;
+	}
+	
+	public Deposit deposit(OperationLocation location, double amount) throws BusinessException {
+		depositAmount(amount);
+
+		Deposit deposit = new Deposit(location, this, amount);
 		this.deposits.add(deposit);
 
 		return deposit;

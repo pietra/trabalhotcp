@@ -1,3 +1,6 @@
+/*
+ * Created on 6 Jan 2014 21:13:45 
+ */
 package bank.ui.graphic.action;
 
 import java.awt.BorderLayout;
@@ -20,29 +23,31 @@ import javax.swing.KeyStroke;
 
 import bank.business.AccountOperationService;
 import bank.business.BusinessException;
-import bank.business.domain.Deposit;
+import bank.business.domain.EnvelopeDeposit;
 import bank.ui.TextManager;
 import bank.ui.graphic.BankGraphicInterface;
 import bank.ui.graphic.GUIUtils;
 
-public class DepositAction extends AccountAbstractAction {
+/**
+ * @author ingrid
+ * 
+ */
+public class EnvelopeDepositAction extends AccountAbstractAction {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6169748317926875862L;
-	
+	private static final long serialVersionUID = 5090183202921964451L;
+
 	private JFormattedTextField amount;
 	private JDialog dialog;
+	private JFormattedTextField envelope;
 
-	public DepositAction(BankGraphicInterface bankInterface,
+	public EnvelopeDepositAction(BankGraphicInterface bankInterface,
 			TextManager textManager,
 			AccountOperationService accountOperationService) {
 		super(bankInterface, textManager, accountOperationService);
 
 		super.putValue(Action.ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
-		super.putValue(Action.NAME, textManager.getText("action.depositDirect"));
+		super.putValue(Action.NAME, textManager.getText("action.deposit"));
 	}
 
 	@Override
@@ -53,6 +58,12 @@ public class DepositAction extends AccountAbstractAction {
 		JPanel subpanel = new JPanel(new GridLayout(4, 2, 5, 5));
 
 		initAndAddAccountFields(subpanel);
+
+		this.envelope = new JFormattedTextField(
+				NumberFormat.getIntegerInstance());
+		envelope.setColumns(10);
+		subpanel.add(new JLabel(textManager.getText("envelope") + ":"));
+		subpanel.add(envelope);
 
 		this.amount = new JFormattedTextField(NumberFormat.getNumberInstance());
 		amount.setColumns(10);
@@ -84,10 +95,11 @@ public class DepositAction extends AccountAbstractAction {
 			if (!GUIUtils.INSTANCE.checkMandatory(bankInterface.getFrame(),
 					amount.getValue(), "amount"))
 				return;
-			Deposit deposit = accountOperationService.deposit(bankInterface
+			EnvelopeDeposit deposit = accountOperationService.depositEnvelope(bankInterface
 					.getOperationLocation().getNumber(), ((Number) branch
 					.getValue()).longValue(), ((Number) accountNumber
-					.getValue()).longValue(), ((Number) amount.getValue()).doubleValue());
+					.getValue()).longValue(), ((Number) envelope.getValue())
+					.intValue(), ((Number) amount.getValue()).doubleValue());
 			StringBuffer sb = new StringBuffer();
 			sb.append(textManager.getText("message.operation.succesfull"))
 					.append("\n");
@@ -105,4 +117,5 @@ public class DepositAction extends AccountAbstractAction {
 					exc);
 		}
 	}
+
 }

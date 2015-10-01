@@ -12,6 +12,7 @@ import bank.business.domain.ATM;
 import bank.business.domain.Branch;
 import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Deposit;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
 import bank.business.domain.Withdrawal;
@@ -94,8 +95,11 @@ public class StatementCommand extends Command {
 							"operation."
 									+ transaction.getClass().getSimpleName()))
 					.append("\t\t");
-			if (transaction instanceof Deposit) {
-				sb.append(((Deposit) transaction).getEnvelope()).append("\t\t");
+			if (transaction instanceof EnvelopeDeposit) {
+				sb.append(((EnvelopeDeposit) transaction).getEnvelope()).append("\t\t");
+				sb.append("+ ").append(transaction.getAmount()).append("\t").append(((Deposit) transaction).getTax());
+			} else if (transaction instanceof Deposit) {
+				sb.append("\t\t\t");
 				sb.append("+ ").append(transaction.getAmount()).append("\t").append(((Deposit) transaction).getTax());
 			} else if (transaction instanceof Transfer) {
 				Transfer transfer = (Transfer) transaction;

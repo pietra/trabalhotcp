@@ -5,7 +5,7 @@ import bank.business.domain.ATM;
 import bank.business.domain.CurrentAccount;
 import bank.ui.text.command.BalanceCommand;
 import bank.ui.text.command.ClientLoginCommand;
-import bank.ui.text.command.DepositCommand;
+import bank.ui.text.command.EnvelopeDepositCommand;
 import bank.ui.text.command.LogoutCommand;
 import bank.ui.text.command.StatementCommand;
 import bank.ui.text.command.TransferCommand;
@@ -23,7 +23,7 @@ public class ATMInterface extends BankTextInterface {
 				accountOperationService));
 		this.addAction("B", new BalanceCommand(this, accountOperationService));
 		this.addAction("S", new StatementCommand(this, accountOperationService));
-		this.addAction("D", new DepositCommand(this, accountOperationService));
+		this.addAction("D", new EnvelopeDepositCommand(this, accountOperationService));
 		this.addAction("W",
 				new WithdrawalCommand(this, accountOperationService));
 		this.addAction("T", new TransferCommand(this, accountOperationService));

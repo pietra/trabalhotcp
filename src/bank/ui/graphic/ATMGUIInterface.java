@@ -11,7 +11,7 @@ import bank.business.domain.CurrentAccount;
 import bank.ui.TextManager;
 import bank.ui.graphic.action.BalanceAction;
 import bank.ui.graphic.action.ClientLoginAction;
-import bank.ui.graphic.action.DepositAction;
+import bank.ui.graphic.action.EnvelopeDepositAction;
 import bank.ui.graphic.action.ExitAction;
 import bank.ui.graphic.action.LogoutAction;
 import bank.ui.graphic.action.StatementAction;
@@ -41,7 +41,7 @@ public class ATMGUIInterface extends BankGraphicInterface {
 				accountOperationService));
 		addPanelAction(new StatementAction(this, textManager,
 				accountOperationService));
-		addPanelAction(new DepositAction(this, textManager,
+		addPanelAction(new EnvelopeDepositAction(this, textManager,
 				accountOperationService));
 		addPanelAction(new WithdrawalAction(this, textManager,
 				accountOperationService));

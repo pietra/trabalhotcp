@@ -15,6 +15,7 @@ import bank.business.BusinessException;
 import bank.business.domain.Branch;
 import bank.business.domain.CurrentAccount;
 import bank.business.domain.CurrentAccountId;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Deposit;
 import bank.business.domain.OperationLocation;
 import bank.business.domain.Transaction;
@@ -35,13 +36,24 @@ public class AccountOperationServiceImpl implements AccountOperationService {
 	}
 
 	@Override
-	public Deposit deposit(long operationLocation, long branch,
+	public EnvelopeDeposit depositEnvelope(long operationLocation, long branch,
 			long accountNumber, long envelope, double amount)
 			throws BusinessException {
 		CurrentAccount currentAccount = readCurrentAccount(branch,
 				accountNumber);
-		Deposit deposit = currentAccount.deposit(
+		EnvelopeDeposit deposit = currentAccount.depositEnvelope(
 				getOperationLocation(operationLocation), envelope, amount);
+		return deposit;
+	}
+	
+	@Override
+	public Deposit deposit(long operationLocation, long branch,
+			long accountNumber, double amount) throws BusinessException {
+		// TODO Auto-generated method stub
+		CurrentAccount currentAccount = readCurrentAccount(branch,
+				accountNumber);
+		Deposit deposit = currentAccount.deposit(
+				getOperationLocation(operationLocation), amount);
 		return deposit;
 	}
 

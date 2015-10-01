@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import bank.business.domain.CurrentAccount;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Deposit;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
@@ -18,8 +19,12 @@ import bank.business.domain.Withdrawal;
  */
 public interface AccountOperationService {
 
-	public Deposit deposit(long operationLocation, long branch,
+	public EnvelopeDeposit depositEnvelope(long operationLocation, long branch,
 			long accountNumber, long envelope, double amount)
+			throws BusinessException;
+	
+	public Deposit deposit(long operationLocation, long branch,
+			long accountNumber, double amount)
 			throws BusinessException;
 
 	public double getBalance(long branch, long accountNumber)

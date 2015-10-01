@@ -37,6 +37,7 @@ import bank.business.BusinessException;
 import bank.business.domain.Branch;
 import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Deposit;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
 import bank.business.domain.Withdrawal;
@@ -141,8 +142,8 @@ public class StatementAction extends AccountAbstractAction {
 						+ t.getClass().getSimpleName());
 				break;
 			case 3:
-				if (t instanceof Deposit) {
-					val = ((Deposit) t).getEnvelope();
+				if (t instanceof EnvelopeDeposit) {
+					val = ((EnvelopeDeposit) t).getEnvelope();
 				} else if (t instanceof Transfer) {
 					Transfer transfer = (Transfer) t;
 					StringBuffer sb = new StringBuffer();
@@ -391,6 +392,9 @@ public class StatementAction extends AccountAbstractAction {
 							((Number) branch.getValue()).longValue(),
 							((Number) accountNumber.getValue()).longValue(),
 							begin, end);
+			
+			System.out.println(transactions.size());
+			
 			this.transactions.setModel(new TransactionTableModel(
 					new CurrentAccountId(new Branch(
 							((Number) branch.getValue()).longValue()),
