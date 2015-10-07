@@ -9,6 +9,7 @@ import java.util.List;
 import bank.business.domain.CurrentAccount;
 import bank.business.domain.Deposit;
 import bank.business.domain.EnvelopeDeposit;
+import bank.business.domain.Pendency;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
 import bank.business.domain.Withdrawal;
@@ -19,6 +20,9 @@ import bank.business.domain.Withdrawal;
  */
 public interface AccountOperationService {
 
+	public void approvePendency(Pendency<?> pendency)
+			throws BusinessException;
+	
 	public EnvelopeDeposit depositEnvelope(long operationLocation, long branch,
 			long accountNumber, long envelope, double amount)
 			throws BusinessException;

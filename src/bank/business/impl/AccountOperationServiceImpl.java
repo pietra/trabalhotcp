@@ -18,6 +18,7 @@ import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Deposit;
 import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.OperationLocation;
+import bank.business.domain.Pendency;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
 import bank.business.domain.Withdrawal;
@@ -33,6 +34,11 @@ public class AccountOperationServiceImpl implements AccountOperationService {
 
 	public AccountOperationServiceImpl(Database database) {
 		this.database = database;
+	}
+	
+	@Override
+	public void approvePendency(Pendency<?> pendency) throws BusinessException {
+		pendency.approve();
 	}
 
 	@Override

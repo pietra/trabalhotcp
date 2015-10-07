@@ -25,16 +25,15 @@ public class EnvelopeDeposit extends Pendency<Deposit> {
 
 	@Override
 	public void approve() throws BusinessException {
-		setState(State.APPROVED);
-		Deposit deposit = getAccount().deposit(getLocation(), getAmount());
-		getAccount().getDeposits().remove(deposit); // Remove depósito da lista para evitar duplicados (não é melhor solução)
+//		setState(State.APPROVED);
+		getAccount().deposit(getLocation(), getAmount(), false);
 		
-		setPendingTransaction(deposit);
+//		setPendingTransaction(deposit);
 	}
 	
 	@Override
 	public void reject() throws BusinessException {
-		setState(State.REJECTED);
+//		setState(State.REJECTED);
 	}
 
 }

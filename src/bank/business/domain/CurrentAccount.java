@@ -27,6 +27,7 @@ public class CurrentAccount implements Credentials {
 		this.deposits = new ArrayList<>();
 		this.transfers = new ArrayList<>();
 		this.withdrawals = new ArrayList<>();
+		this.pendencies = new ArrayList<>();
 	}
 
 	public CurrentAccount(Branch branch, long number, Client client,
@@ -44,13 +45,18 @@ public class CurrentAccount implements Credentials {
 		return envelopeDeposit;
 	}
 	
-	public Deposit deposit(OperationLocation location, double amount) throws BusinessException {
+	public Deposit deposit(OperationLocation location, double amount, boolean addToList) throws BusinessException {
 		Deposit deposit = new Deposit(location, this, amount);
-		this.deposits.add(deposit);
+		if (addToList)
+			this.deposits.add(deposit);
 
 		depositAmount(deposit.getAmount());
 		
 		return deposit;
+	}
+	
+	public Deposit deposit(OperationLocation location, double amount) throws BusinessException {
+		return deposit(location, amount, true);
 	}
 
 	private void depositAmount(double amount) throws BusinessException {
@@ -129,7 +135,7 @@ public class CurrentAccount implements Credentials {
 		this.transfers.add(transfer);
 		destinationAccount.transfers.add(transfer);
 
-		withdrawalAmount(amount);
+		withdrawalAmount(transfer.getAmountPlusTax());
 		destinationAccount.depositAmount(transfer.getAmount());
 
 		return transfer;
@@ -137,10 +143,10 @@ public class CurrentAccount implements Credentials {
 
 	public Withdrawal withdrawal(OperationLocation location, double amount)
 			throws BusinessException {
-		withdrawalAmount(amount);
-
 		Withdrawal withdrawal = new Withdrawal(location, this, amount);
 		this.withdrawals.add(withdrawal);
+
+		withdrawalAmount(withdrawal.getAmountPlusTax());
 
 		return withdrawal;
 	}

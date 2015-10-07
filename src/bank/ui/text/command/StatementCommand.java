@@ -97,10 +97,10 @@ public class StatementCommand extends Command {
 					.append("\t\t");
 			if (transaction instanceof EnvelopeDeposit) {
 				sb.append(((EnvelopeDeposit) transaction).getEnvelope()).append("\t\t");
-				sb.append("+ ").append(transaction.getAmount()).append("\t").append(((Deposit) transaction).getTax());
+				sb.append("+ ").append(transaction.getAmount());
 			} else if (transaction instanceof Deposit) {
 				sb.append("\t\t\t");
-				sb.append("+ ").append(transaction.getAmount()).append("\t").append(((Deposit) transaction).getTax());
+				sb.append("+ ").append(transaction.getAmount());
 			} else if (transaction instanceof Transfer) {
 				Transfer transfer = (Transfer) transaction;
 				if (transfer.getAccount().getId().equals(caId)) {
@@ -120,7 +120,7 @@ public class StatementCommand extends Command {
 				sb.append(transaction.getAmount()).append("\t").append(transfer.getTax());
 			} else if (transaction instanceof Withdrawal) {
 				sb.append("\t\t\t");
-				sb.append("- ").append(transaction.getAmount());
+				sb.append("- ").append(transaction.getAmount()).append("\t").append(((Withdrawal) transaction).getTax());
 			}
 			sb.append("\n");
 		}
