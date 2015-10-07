@@ -36,10 +36,9 @@ public class CurrentAccount implements Credentials {
 
 	public EnvelopeDeposit depositEnvelope(OperationLocation location, long envelope,
 			double amount) throws BusinessException {
-		depositAmount(amount);
 		
 		EnvelopeDeposit deposit = new EnvelopeDeposit(location, this, envelope, amount);
-		this.deposit.add(deposit);
+		this.deposits.add(deposit);
 
 		return deposit;
 	}
@@ -58,8 +57,7 @@ public class CurrentAccount implements Credentials {
 			throw new BusinessException("exception.invalid.amount");
 		}
 		
-		// Não adiciona o imposto na conta
-		this.balance += amount * (1 - TaxedTransaction.TAX);
+		this.balance += amount;
 	}
 
 	/**
