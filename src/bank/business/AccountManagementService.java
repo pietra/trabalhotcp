@@ -4,6 +4,7 @@
 package bank.business;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import bank.business.domain.CurrentAccount;
@@ -26,5 +27,7 @@ public interface AccountManagementService {
 
 	public void checkPendencies(Map<Pendency<?>, State> newStates)
 			throws BusinessException;
+
+	public List<Pendency<?>> getAllPendencies();
 	
 }

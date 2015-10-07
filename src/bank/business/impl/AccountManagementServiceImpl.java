@@ -4,6 +4,7 @@
 package bank.business.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -31,6 +32,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	public AccountManagementServiceImpl(Database database) {
 		this.database = database;
 		this.random = new RandomString(8);
+	}
+	
+	@Override
+	public List<Pendency<?>> getAllPendencies() {
+		return database.getAllPendencies();
 	}
 	
 	@Override

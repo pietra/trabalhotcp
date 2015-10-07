@@ -21,6 +21,7 @@ import bank.business.domain.Client;
 import bank.business.domain.CurrentAccount;
 import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Employee;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.OperationLocation;
 import bank.business.domain.Pendency;
 import bank.business.domain.Transaction;
@@ -120,16 +121,16 @@ public class Database {
 			Random r = new Random(System.currentTimeMillis());
 			Calendar cal = Calendar.getInstance();
 			for (int i = 0; i < 8; i++) {
-				changeDate(
-						ca1.depositEnvelope(b1, r.nextInt(10000), r.nextDouble() * 150),
-						r, cal);
+				EnvelopeDeposit dep = ca1.depositEnvelope(b1, r.nextInt(10000), r.nextDouble() * 150);
+				save(dep);
+				changeDate(dep, r, cal);
 				changeDate(ca1.withdrawal(atm1, r.nextDouble() * 100), r, cal);
 				changeDate(ca1.transfer(atm2, ca2, r.nextDouble() * 100), r,
 						cal);
 
-				changeDate(
-						ca2.depositEnvelope(b2, r.nextInt(10000), r.nextDouble() * 150),
-						r, cal);
+				EnvelopeDeposit dep2 = ca2.depositEnvelope(b2, r.nextInt(10000), r.nextDouble() * 150);
+				save(dep2);
+				changeDate(dep2, r, cal);
 				changeDate(ca2.withdrawal(atm2, r.nextDouble() * 100), r, cal);
 				changeDate(ca2.transfer(atm3, ca1, r.nextDouble() * 100), r,
 						cal);

@@ -38,6 +38,7 @@ import bank.business.domain.Branch;
 import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Deposit;
 import bank.business.domain.EnvelopeDeposit;
+import bank.business.domain.Pendency;
 import bank.business.domain.TaxedTransaction;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
@@ -144,7 +145,9 @@ public class StatementAction extends AccountAbstractAction {
 				break;
 			case 3:
 				if (t instanceof EnvelopeDeposit) {
-					val = ((EnvelopeDeposit) t).getEnvelope();
+					val = String.format("%s (Envelope %d)", 
+							textManager.getText("state." + ((EnvelopeDeposit) t).getState().toString()), 
+							((EnvelopeDeposit) t).getEnvelope());
 				} else if (t instanceof Transfer) {
 					Transfer transfer = (Transfer) t;
 					StringBuffer sb = new StringBuffer();
@@ -161,6 +164,9 @@ public class StatementAction extends AccountAbstractAction {
 				}
 				break;
 			case 4:
+				if (t instanceof Pendency)
+					t = ((Pendency<?>) t).getTransaction();
+				
 				if (t instanceof Deposit) {
 					val = "+ " + t.getAmount();
 				} else if (t instanceof Transfer) {
@@ -177,6 +183,9 @@ public class StatementAction extends AccountAbstractAction {
 				}
 				break;
 			case 5:
+				if (t instanceof Pendency)
+					t = ((Pendency<?>) t).getTransaction();
+				
 				if (t instanceof TaxedTransaction) {
 					val = ((TaxedTransaction) t).getTax();
 				} else {
