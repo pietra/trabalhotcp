@@ -4,6 +4,8 @@
 package bank.business.impl;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import bank.business.AccountManagementService;
 import bank.business.BusinessException;
@@ -12,6 +14,8 @@ import bank.business.domain.Client;
 import bank.business.domain.CurrentAccount;
 import bank.business.domain.Employee;
 import bank.business.domain.OperationLocation;
+import bank.business.domain.Pendency;
+import bank.business.domain.Pendency.State;
 import bank.data.Database;
 import bank.util.RandomString;
 
@@ -27,6 +31,23 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	public AccountManagementServiceImpl(Database database) {
 		this.database = database;
 		this.random = new RandomString(8);
+	}
+	
+	@Override
+	public void checkPendencies(Map<Pendency<?>, State> newStates) throws BusinessException {
+		for (Entry<Pendency<?>, State> t : newStates.entrySet())
+			switch (t.getValue()) {
+			case APPROVED:
+				t.getKey().approve();
+				database.remove(t.getKey());
+				break;
+			case REJECTED:
+				t.getKey().reject();
+				database.remove(t.getKey());
+				break;
+			default:
+				break;
+			}
 	}
 
 	@Override
@@ -61,7 +82,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		if (!employee.getPassword().equals(password)) {
 			throw new BusinessException("exception.invalid.password");
 		}
-
+		
 		return employee;
 	}
 
