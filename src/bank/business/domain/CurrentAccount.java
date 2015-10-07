@@ -44,11 +44,11 @@ public class CurrentAccount implements Credentials {
 	}
 	
 	public Deposit deposit(OperationLocation location, double amount) throws BusinessException {
-		depositAmount(amount);
-
 		Deposit deposit = new Deposit(location, this, amount);
 		this.deposits.add(deposit);
 
+		depositAmount(deposit.getAmount());
+		
 		return deposit;
 	}
 
@@ -57,7 +57,7 @@ public class CurrentAccount implements Credentials {
 			throw new BusinessException("exception.invalid.amount");
 		}
 		
-		this.balance += amount;
+		this.balance += amount ;
 	}
 
 	/**
@@ -122,13 +122,13 @@ public class CurrentAccount implements Credentials {
 	public Transfer transfer(OperationLocation location,
 			CurrentAccount destinationAccount, double amount)
 			throws BusinessException {
-		withdrawalAmount(amount);
-		destinationAccount.depositAmount(amount);
-
 		Transfer transfer = new Transfer(location, this, destinationAccount,
 				amount);
 		this.transfers.add(transfer);
 		destinationAccount.transfers.add(transfer);
+
+		withdrawalAmount(amount);
+		destinationAccount.depositAmount(transfer.getAmount());
 
 		return transfer;
 	}
