@@ -38,6 +38,7 @@ import bank.business.domain.Branch;
 import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Deposit;
 import bank.business.domain.EnvelopeDeposit;
+import bank.business.domain.TaxedTransaction;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
 import bank.business.domain.Withdrawal;
@@ -176,10 +177,8 @@ public class StatementAction extends AccountAbstractAction {
 				}
 				break;
 			case 5:
-				if (t instanceof Deposit) {
-					val = ((Deposit) t).getTax();
-				} else if (t instanceof Transfer) {
-					val = ((Transfer) t).getTax();
+				if (t instanceof TaxedTransaction) {
+					val = ((TaxedTransaction) t).getTax();
 				} else {
 					assert false;
 				}

@@ -15,8 +15,8 @@ import bank.business.BusinessException;
 import bank.business.domain.Branch;
 import bank.business.domain.CurrentAccount;
 import bank.business.domain.CurrentAccountId;
-import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Deposit;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.OperationLocation;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
@@ -43,9 +43,10 @@ public class AccountOperationServiceImpl implements AccountOperationService {
 				accountNumber);
 		EnvelopeDeposit deposit = currentAccount.depositEnvelope(
 				getOperationLocation(operationLocation), envelope, amount);
+		database.save(deposit);
 		return deposit;
 	}
-	
+
 	@Override
 	public Deposit deposit(long operationLocation, long branch,
 			long accountNumber, double amount) throws BusinessException {

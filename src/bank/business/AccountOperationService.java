@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import bank.business.domain.CurrentAccount;
-import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Deposit;
+import bank.business.domain.EnvelopeDeposit;
 import bank.business.domain.Transaction;
 import bank.business.domain.Transfer;
 import bank.business.domain.Withdrawal;

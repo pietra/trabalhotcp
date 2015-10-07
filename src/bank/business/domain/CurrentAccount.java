@@ -17,6 +17,7 @@ public class CurrentAccount implements Credentials {
 	private CurrentAccountId id;
 	private List<Transfer> transfers;
 	private List<Withdrawal> withdrawals;
+	private List<Pendency<?>> pendencies;
 
 	public CurrentAccount(Branch branch, long number, Client client) {
 		this.id = new CurrentAccountId(branch, number);
@@ -37,10 +38,10 @@ public class CurrentAccount implements Credentials {
 	public EnvelopeDeposit depositEnvelope(OperationLocation location, long envelope,
 			double amount) throws BusinessException {
 		
-		EnvelopeDeposit deposit = new EnvelopeDeposit(location, this, envelope, amount);
-		this.deposits.add(deposit);
+		EnvelopeDeposit envelopeDeposit = new EnvelopeDeposit(location, this, envelope, amount);
+		this.pendencies.add(envelopeDeposit);
 
-		return deposit;
+		return envelopeDeposit;
 	}
 	
 	public Deposit deposit(OperationLocation location, double amount) throws BusinessException {
@@ -94,6 +95,7 @@ public class CurrentAccount implements Credentials {
 		transactions.addAll(deposits);
 		transactions.addAll(withdrawals);
 		transactions.addAll(transfers);
+		transactions.addAll(pendencies);
 		return transactions;
 	}
 

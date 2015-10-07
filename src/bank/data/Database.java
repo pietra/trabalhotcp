@@ -3,10 +3,12 @@
  */
 package bank.data;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -20,6 +22,7 @@ import bank.business.domain.CurrentAccount;
 import bank.business.domain.CurrentAccountId;
 import bank.business.domain.Employee;
 import bank.business.domain.OperationLocation;
+import bank.business.domain.Pendency;
 import bank.business.domain.Transaction;
 
 /**
@@ -32,6 +35,7 @@ public class Database {
 	private final Map<String, Employee> employees;
 	private final Log log;
 	private final Map<Long, OperationLocation> operationLocations;
+	private final List<Pendency<?>> pendencies;
 
 	public Database() {
 		this(true);
@@ -42,6 +46,7 @@ public class Database {
 		this.operationLocations = new HashMap<>();
 		this.employees = new HashMap<>();
 		this.currentAccounts = new HashMap<>();
+		this.pendencies = new ArrayList<>();
 		if (initData) {
 			initData();
 		}
@@ -59,6 +64,10 @@ public class Database {
 		return this.operationLocations.values();
 	}
 
+	public List<Pendency<?>> getAllPendencies() {
+		return pendencies;
+	}
+	
 	public CurrentAccount getCurrentAccount(CurrentAccountId currentAccountId) {
 		return currentAccounts.get(currentAccountId);
 	}
@@ -152,5 +161,14 @@ public class Database {
 		this.operationLocations.put(operationLocation.getNumber(),
 				operationLocation);
 	}
+	
+	public void save(Pendency<?> pendency) {
+		this.pendencies.add(pendency);
+	}
+	
+	public void remove(Pendency<?> pendency) {
+		this.pendencies.remove(pendency);
+	}
+
 
 }
