@@ -3,7 +3,9 @@ package bank.ui.text;
 import bank.business.AccountManagementService;
 import bank.business.AccountOperationService;
 import bank.business.domain.Branch;
+import bank.ui.graphic.action.CheckPendenciesAction;
 import bank.ui.text.command.BalanceCommand;
+import bank.ui.text.command.CheckPendenciesCommand;
 import bank.ui.text.command.CreateAccountCommand;
 import bank.ui.text.command.DepositCommand;
 import bank.ui.text.command.EnvelopeDepositCommand;
@@ -26,6 +28,8 @@ public class BranchInterface extends BankTextInterface {
 		this.addAction("L", new EmployeeLoginCommand(this,
 				accountManagementService));
 		this.addAction("C", new CreateAccountCommand(this,
+				accountManagementService));
+		this.addAction("V", new CheckPendenciesCommand(this,
 				accountManagementService));
 		this.addAction("B", new BalanceCommand(this, accountOperationService));
 		this.addAction("S", new StatementCommand(this, accountOperationService));
